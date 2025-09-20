@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import com.soundwave.compose.lib.SoundWaveConfig
-import com.soundwave.compose.lib.SoundWaveView
+import com.soundwave.compose.lib.SoundWave
 import com.soundwave.compose.ui.theme.SoundWaveComposeTheme
 import kotlin.concurrent.thread
 
@@ -115,7 +115,7 @@ class MainActivity : ComponentActivity() {
                     val audioData = buffer.copyOf(readSize)
                     val maxAmp = audioData.maxOrNull()?.toFloat() ?: 0f
                     val volume = dbCalculator.calculateDB(audioData, audioData.size).toInt() + 10
-                    
+
                     // 更新UI状态
                     currentVolume.value = volume
                     maxAmplitude.value = maxAmp.toInt()
@@ -148,56 +148,56 @@ fun SoundWaveScreen(
         verticalArrangement = Arrangement.Center
     ) {
         
-        // 微信气泡样式的小音浪 - 完全按照原版参数
+        // 微信气泡样式的小音浪
         WechatBubbleFrame(
             modifier = Modifier.wrapContentSize(),
             bubbleColor = Color(0xFF95D75B)
         ) {
-            SoundWaveView(
+            SoundWave(
                 volume = volume,
                 modifier = Modifier.wrapContentSize(),
                 config = SoundWaveConfig(
-                    volumeCount = 37, // 原版是37根，不是12根
-                    volumeIdleCount = 12, // 原版设置
-                    volumeBarColor = Color.Black.copy(alpha = 0.625f), // #A0000000
+                    volumeCount = 37,
+                    volumeIdleCount = 12,
+                    volumeBarColor = Color.Black.copy(alpha = 0.625f),
                     maxVolumeBarHeight = 45.dp,
                     minVolumeBarHeight = 4.dp,
                     volumeBarHalfWidth = 0.9.dp,
-                    volumeBarMargin = 0.8.dp
-                ),
-                idleHeightGetter = { x ->
-                    0.07f * x * x * (12 - x) + 4
-                }
+                    volumeBarMargin = 0.8.dp,
+                    idleHeightGetter = { x ->
+                        (x + 6).dp
+                    }
+                )
             )
         }
         
         Spacer(modifier = Modifier.height(30.dp))
         
-        // 大的音浪视图 - 使用原版的蓝色背景
+        // 大的音浪视图
         Box(
             modifier = Modifier
                 .wrapContentSize()
                 .background(
-                    color = Color(0xA82196F3), // 原版的蓝色背景
+                    color = Color(0xA82196F3),
                     shape = RoundedCornerShape(8.dp)
                 )
                 .padding(horizontal = 20.dp, vertical = 8.dp)
         ) {
-            SoundWaveView(
+            SoundWave(
                 volume = volume,
                 modifier = Modifier.wrapContentSize(),
                 config = SoundWaveConfig(
                     volumeCount = 38,
                     volumeIdleCount = 16,
                     maxVolumeBarHeight = 45.dp,
-                    minVolumeBarHeight = 4.dp, // 原版确实是4dp
+                    minVolumeBarHeight = 4.dp,
                     volumeBarColor = Color.White,
                     volumeBarHalfWidth = 1.5.dp,
-                    volumeBarMargin = 2.dp
+                    volumeBarMargin = 2.dp,
+                    idleHeightGetter = { x ->
+                        (0.07f * x * x * (12 - x) + 4).dp
+                    }
                 ),
-                idleHeightGetter = { x ->
-                    0.07f * x * x * (12 - x) + 4
-                }
             )
         }
         
@@ -208,7 +208,7 @@ fun SoundWaveScreen(
             text = "Volume: $volume (Max: $maxAmplitude)\nbufferSize = $bufferSize",
             fontSize = 24.sp,
             fontWeight = FontWeight.Normal,
-            color = Color.White // 白色文字适应暗色背景
+            color = Color.White
         )
     }
 }

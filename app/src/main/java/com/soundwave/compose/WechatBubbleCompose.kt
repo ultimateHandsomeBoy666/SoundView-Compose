@@ -14,27 +14,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-/**
- * 微信气泡样式的容器组件
- * 
- * @param modifier 修饰符
- * @param bubbleColor 气泡背景色，默认为微信绿色
- * @param cornerRadius 圆角半径
- * @param triangleSize 右下角三角形尖尖的大小
- * @param paddingHorizontal 水平内边距
- * @param paddingVertical 垂直内边距  
- * @param paddingBottom 底部内边距，需要为三角形留出空间
- * @param content 容器内容
- * 
- * 使用示例：
- * ```
- * WechatBubbleFrame(
- *     bubbleColor = Color(0xFF95D75B)
- * ) {
- *     Text("Hello World")
- * }
- * ```
- */
 @Composable
 fun WechatBubbleFrame(
     modifier: Modifier = Modifier,
@@ -100,7 +79,7 @@ private fun DrawScope.drawWechatBubble(
         cornerRadius = CornerRadius(cornerRadius, cornerRadius)
     )
     
-    // 绘制右下角的三角形尖尖 - 完全按照原版算法
+    // 绘制右下角的三角形尖尖
     val triangleStartX = size.width * 0.8f // 三角形起始位置
     val triangleStartY = size.height - triangleSize
     val triangleEndX = triangleStartX + triangleSize * 0.8f
