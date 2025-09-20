@@ -1,7 +1,10 @@
+import com.vanniktech.maven.publish.SonatypeHost
+
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
+    alias(libs.plugins.vanniktech.maven.publish)
 }
 
 android {
@@ -37,11 +40,40 @@ android {
     }
 }
 
+mavenPublishing {
+    coordinates("io.github.ultimatehandsomeboy666", "soundwavelib", "1.0.1")
+
+    pom {
+        name.set("SoundWaveCompose")
+        description.set("A Composable SoundView that dances with volume changing")
+        url.set("https://github.com/ultimateHandsomeBoy666/SoundView-Compose")
+
+        licenses {
+            license {
+                name.set("The Apache License, Version 2.0")
+                url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+            }
+        }
+        developers {
+            developer {
+                id.set("ultimateHandsomeBoy666")
+                name.set("bullfrog")
+                email.set("jiujiuli@qq.com")
+            }
+        }
+        scm {
+            connection.set("scm:git:github.com/ultimateHandsomeBoy666/SoundView-Compose.git")
+            developerConnection.set("scm:git:ssh://github.com/ultimateHandsomeBoy666/SoundView-Compose.git")
+            url.set("https://github.com/ultimateHandsomeBoy666/SoundView-Compose/tree/main")
+        }
+    }
+
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    signAllPublications()
+}
+
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
