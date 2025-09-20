@@ -41,7 +41,7 @@ android {
 }
 
 mavenPublishing {
-    coordinates("io.github.ultimatehandsomeboy666", "soundwavelib", "1.0.1")
+    coordinates("io.github.ultimatehandsomeboy666", "soundwavelib-compose", "1.0.1")
 
     pom {
         name.set("SoundWaveCompose")
